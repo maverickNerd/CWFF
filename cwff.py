@@ -290,9 +290,9 @@ class collector:
 				finally:
 					del futures[:]
 
-		sys.stdout.write(f"\n{color.blue} |{color.reset} Elapsed time {time.strftime('%M.%Sm', time.gmtime(time.time()-start))}.\n | \n")
-		sys.stdout.flush()
-		self.__add_endpoints(total_endpoints)
+			sys.stdout.write(f"\n{color.blue} |{color.reset} Elapsed time {time.strftime('%M.%Sm', time.gmtime(time.time()-start))}.\n | \n")
+			sys.stdout.flush()
+			self.__add_endpoints(total_endpoints)
 
 	def wayback_endpoints(self):
 		total_endpoints = []
@@ -310,8 +310,8 @@ class collector:
 				total_endpoints = sorted(set(total_endpoints))
 				sys.stdout.write("\r | Found {} endpoint(s) (Total progress:{}/{})".format( len(total_endpoints),number,len(self.wayback_urls)) )
 				sys.stdout.flush()
-		sys.stdout.write(f"\n{color.blue} |{color.reset} Elapsed time {time.strftime('%M.%Sm', time.gmtime(time.time()-start))}.\n |\n")
-		sys.stdout.flush()
+			sys.stdout.write(f"\n{color.blue} |{color.reset} Elapsed time {time.strftime('%M.%Sm', time.gmtime(time.time()-start))}.\n |\n")
+			sys.stdout.flush()
 		self.__add_endpoints(total_endpoints)
 
 	def commoncrawl_endpoints(self, search_subdomains=False):
@@ -383,9 +383,9 @@ class collector:
 				sys.stdout.write("\r | Found {} endpoint(s) (Total progress:{}/{})".format( len(total_endpoints),number,len(wanted_urls)) )
 				sys.stdout.flush()
 
-		sys.stdout.write(f"\n{color.blue} |{color.reset} Total elapsed time {time.strftime('%M.%Sm', time.gmtime(time.time()-start))}.\n |\n")
-		sys.stdout.flush()
-		self.__add_endpoints(total_endpoints)
+			sys.stdout.write(f"\n{color.blue} |{color.reset} Total elapsed time {time.strftime('%M.%Sm', time.gmtime(time.time()-start))}.\n |\n")
+			sys.stdout.flush()
+			self.__add_endpoints(total_endpoints)
 
 	def alienvault_endpoints(self):
 		url = f"https://otx.alienvault.com/api/v1/indicators/hostname/{self.domain}/url_list?limit=200&page="
@@ -590,6 +590,9 @@ def main_logic(site, args):
 			if not os.path.isdir(args.o):
 				os.mkdir(args.o)
 			outdir = args.o
+		else:
+			if not os.path.isdir(outdir):
+				os.mkdir(outdir)
 
 		with open(os.path.join(outdir,"endpoints.txt"), "w") as f:
 			for line in sorted(collect.endpoints):
@@ -612,7 +615,7 @@ if __name__ == '__main__':
 	parser.add_argument("--threads", help="The number of maximum concurrent threads to use (Default:1000)")
 	parser.add_argument("--github", help="Collect endpoints from a given github repo (ex:https://github.com/google/flax)")
 	parser.add_argument("--subdomains", help="Extract endpoints from subdomains also while search in the wayback machine!",action="store_true")
-	parser.add_argument("--recursive", help="Work on extracted endpoints recursivly (Adds more endpoints but less accurate sometimes)!",action="store_true")
+	parser.add_argument("--recursive", help="Work on extracted endpoints recursively (Adds more endpoints but less accurate sometimes)!",action="store_true")
 	parser.add_argument("--js-libraries", help="Extract endpoints from JS libraries also, not just the JS written by them!",action="store_true")
 	parser.add_argument("--connected-websites", help="Include endpoints extracted from connected websites",action="store_true")
 	parser.add_argument("--juicy-files", help="Include endpoints extracted from juicy files like sitemap.xml and robots.txt",action="store_true")
